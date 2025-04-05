@@ -1,47 +1,67 @@
-The `bank-account-microservices-demo` project demonstrates a microservices architecture for a banking system. It comprises several services, each responsible for specific functionalities, and utilizes key architectural components such as API Gateway, Service Discovery, and Configuration Management.
+# Bank Account Microservices Demo
 
-## Architecture Overview
+This project provides a practical demonstration of a microservices architecture applied to a banking scenario. It showcases best practices for structuring, managing, and deploying independent services that collaboratively fulfill banking-related operations.
 
-The system is composed of the following services:
+## 📌 Services Overview
 
-1. **Config Service (`config-service`)**: Manages the externalized configuration for all microservices. It retrieves configuration properties from a central repository (`config-repo`).
+The application is divided into the following key components:
 
-2. **Service Discovery (`discovery-service`)**: Handles the registration and discovery of microservices, enabling them to locate each other dynamically.
+- **Config Service (`config-service`)**: Manages and centralizes application configurations.
+- **Service Discovery (`discovery-service`)**: Enables dynamic registration and discovery of microservices.
+- **API Gateway (`gateway-service`)**: Serves as the unified entry point for routing requests to backend services.
+- **Customer Service (`customers-service`)**: Handles customer data management.
+- **Account Service (`account-service`)**: Manages bank accounts and transaction operations.
 
-3. **API Gateway (`gateway-service`)**: Acts as a single entry point for clients, routing requests to the appropriate microservices and providing cross-cutting concerns like authentication and rate limiting.
+## 🚀 Architecture
 
-4. **Customer Service (`customers-service`)**: Manages customer-related operations, including creating and retrieving customer information.
+- **Clients** interact exclusively through the **API Gateway**, which forwards requests to the appropriate service.
+- Each microservice fetches configurations dynamically from the **Config Service** at startup.
+- The **Service Discovery** registers each microservice, facilitating dynamic discovery and communication.
 
-5. **Account Service (`account-service`)**: Handles account-related functionalities, such as creating accounts and processing transactions.
+## ⚙️ Getting Started
 
-## Service Interactions
+### Prerequisites
 
-Clients interact with the system through the API Gateway, which forwards requests to the appropriate microservices. Each microservice retrieves its configuration from the Config Service and registers itself with the Service Discovery upon startup. This setup ensures that services can dynamically discover and communicate with each other.
+- Java 17 or higher
+- Maven
+- Spring Boot
 
-## Running the Application
+### Running Locally
 
-To run the application locally:
+1. **Start Config Service**:
+   ```bash
+   cd config-service
+   mvn spring-boot:run
+   ```
 
-1. **Start the Config Service**: Ensure that the `config-repo` contains the necessary configuration files. Then, run the `config-service`.
+2. **Start Service Discovery**:
+   ```bash
+   cd discovery-service
+   mvn spring-boot:run
+   ```
 
-2. **Start the Service Discovery**: Launch the `discovery-service` to enable service registration and discovery.
+3. **Launch API Gateway**:
+   ```bash
+   cd gateway-service
+   mvn spring-boot:run
+   ```
 
-3. **Start the API Gateway**: Run the `gateway-service` to handle incoming client requests.
+4. **Launch Microservices**:
+   ```bash
+   cd customers-service
+   mvn spring-boot:run
 
-4. **Start the Microservices**: Launch the `customers-service` and `account-service`.
+   cd ../account-service
+   mvn spring-boot:run
+   ```
 
-Each service will register itself with the Service Discovery and retrieve its configuration from the Config Service upon startup.
+## 🔗 Useful Information
 
-## Prerequisites
+- Ensure the `config-repo` is properly configured and accessible.
+- The recommended startup sequence is critical for proper service initialization.
+- Consult individual service directories for detailed API endpoints and configurations.
 
-- Java 17 or higher
-- Maven
-- Spring Boot
+---
 
-## Notes
+Feel free to explore, modify, and extend this demo to suit your specific microservices use cases!
 
-- Ensure that the `config-repo` is accessible and contains the necessary configuration files for each service.
-- The order of starting the services is crucial: start with the Config Service, followed by the Service Discovery, then the API Gateway, and finally the microservices.
-- For detailed configurations and endpoints, refer to the respective service directories in the repository.
-
-This setup provides a foundational structure for building and deploying microservices in a banking system context.
